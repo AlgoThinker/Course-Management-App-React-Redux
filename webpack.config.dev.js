@@ -6,8 +6,8 @@ process.env.NODE_ENV = "development";
 
 module.exports = {
   mode: "development",
-  targe: "web",
-  devTool: "cheap-module-source-map",
+  target: "web",
+  devtool: "cheap-module-source-map",
   entry: "./src/index",
   output: {
     path: path.resolve(__dirname, "build"),
@@ -18,9 +18,6 @@ module.exports = {
     stats: "minimal",
     overlay: true,
     historyApiFallback: true,
-    disableHostCheck: true,
-    headers: { "Access-Control-Allow-Origin": "*" },
-    http: false,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -31,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclue: /node_modules/,
+        exclude: /node_modules/,
         use: ["babel-loader"],
       },
       {

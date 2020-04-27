@@ -22,7 +22,7 @@ class CoursesPage extends React.Component {
         <h3>Add Course</h3>
         <input
           type="text"
-          onChange={this.handleChange}
+          onChange={this.handleChange.bind(this)}
           value={this.state.course.title}
         />
         <input type="Submit" value="Save" />

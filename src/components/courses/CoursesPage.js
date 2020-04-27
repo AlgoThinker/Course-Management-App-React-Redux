@@ -31,18 +31,22 @@ class CoursesPage extends React.Component {
           value={this.state.course.title}
         />
         <input type="Submit" value="Save" />
+        {this.props.coursesy.map((course) => (
+          <div key={course.title}>{course.title}</div>
+        ))}
       </form>
     );
   }
 }
 
 CoursesPage.propTypes = {
+  coursesy: PropTypes.array.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    courses: state.courses,
+    coursesy: state.coursesy,
   };
 }
 

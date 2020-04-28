@@ -22,6 +22,8 @@ function ManageCoursePage({
       loadCourses().catch((error) => {
         alert("Loading courses failed " + error);
       });
+    } else {
+      setCourse({ ...props.course });
     }
 
     if (authors.length === 0) {
@@ -29,7 +31,7 @@ function ManageCoursePage({
         alert("Loading authors failed " + error);
       });
     }
-  }, []);
+  }, [props.course]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -66,10 +68,18 @@ ManageCoursePage.propTypes = {
   saveCourse: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
+export function getCourseBySlug(courses, slug) {
+  return courses.find((course) => course.slug === slug) || null;
+}
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
+  const slug = ownProps.match.params.slug;
+  const course =
+    slug && state.coursesy.length > 0
+      ? getCourseBySlug(state.coursesy, slug)
+      : newCourse;
   return {
-    course: newCourse,
+    course,
     coursesyy: state.coursesy,
     authors: state.authors,
   };

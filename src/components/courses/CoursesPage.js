@@ -28,11 +28,13 @@ class CoursesPage extends React.Component {
     }
   }
 
-  handleDeleteCourse = (course) => {
+  handleDeleteCourse = async course => {
     toast.success("Course Deleted");
-    this.props.actions.deleteCourse(course).catch((error) => {
+    try {
+      this.props.actions.deleteCourse(course);
+    } catch (error) {
       toast.error("Delete failed." + error.message, { autoClose: false });
-    });
+    }
   };
 
   render() {
@@ -43,20 +45,20 @@ class CoursesPage extends React.Component {
         {this.props.loading ? (
           <Spinner />
         ) : (
-          <>
-            <button
-              style={{ marginBottom: 20 }}
-              className="btn btn-primary add-course"
-              onClick={() => this.setState({ redirectToAddCoursePage: true })}
-            >
-              Add Course
+            <>
+              <button
+                style={{ marginBottom: 20 }}
+                className="btn btn-primary add-course"
+                onClick={() => this.setState({ redirectToAddCoursePage: true })}
+              >
+                Add Course
             </button>
-            <CourseList
-              onDeleteClick={this.handleDeleteCourse}
-              courses={this.props.coursesyy}
-            />
-          </>
-        )}
+              <CourseList
+                onDeleteClick={this.handleDeleteCourse}
+                courses={this.props.coursesyy}
+              />
+            </>
+          )}
       </>
     );
   }
@@ -75,12 +77,12 @@ function mapStateToProps(state) {
       state.authors.length === 0
         ? []
         : state.coursesy.map((course) => {
-            return {
-              ...course,
-              authorName: state.authors.find((a) => a.id === course.authorId)
-                .name,
-            };
-          }),
+          return {
+            ...course,
+            authorName: state.authors.find((a) => a.id === course.authorId)
+              .name,
+          };
+        }),
     authors: state.authors,
     loading: state.apiCallsInProgress > 0,
   };
